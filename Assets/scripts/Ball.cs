@@ -7,11 +7,16 @@ public class Ball : MonoBehaviour
     public float speed = 2800.0f;
     
     private int count = 0;
-    private int maxhits = 5000;
+    private int maxhits = 500;
     public SpriteRenderer spriteRenderer; // Reference to the SpriteRenderer component
     public Sprite[] states;
-    public float speedIncreaseFactor = 1.0f;
-
+    public float speedIncreaseFactor = 2.0f;
+    public enum Level
+    {
+        level1,
+        level2,
+    }
+    public Level currentLevel;
     private void Awake()
     {
         this.rigidbody = GetComponent<Rigidbody2D>();//reference to the component attached to the game object
@@ -105,7 +110,15 @@ public class Ball : MonoBehaviour
             if (count >= maxhits)
             {
                 gamemanager gameManager = FindFirstObjectByType<gamemanager>();
-                gameManager.CreateNewLayerOfBubbles();
+                switch (currentLevel)
+                {
+                    case Level.level1:
+                        gameManager.CreateNewLayerOfBubbleslevel1();
+                        break;
+                    case Level.level2:
+                        gameManager.CreateNewLayerOfBubbleslevel2();
+                        break;
+                }
                 count = 0;
             }
         }

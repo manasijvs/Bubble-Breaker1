@@ -176,7 +176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd1d4f301d84e0341aff20d0df5a94c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LifeBubbleprefab: {fileID: 0}
+  LifeBubbleprefab: {fileID: 8410836454236582914}
   spawnIntervalMin: 5
   spawnIntervalMax: 10
 --- !u!114 &9038451556670405721

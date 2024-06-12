@@ -673,10 +673,10 @@ MonoBehaviour:
   bubbleSize: 7
   spacing: 1
   rowOffset: 0.5
-  level: 1
   score: 0
   lives: 3
   ScoreText: {fileID: 343957860}
+  currentLevel: 0
 --- !u!4 &1255557090
 Transform:
   m_ObjectHideFlags: 0
@@ -1465,7 +1465,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2718363771925987365, guid: 34007990af8e60544927d4e140a02b65, type: 3}
       propertyPath: speed
-      value: 1800
+      value: 2800
       objectReference: {fileID: 0}
     - target: {fileID: 7127554890423349159, guid: 34007990af8e60544927d4e140a02b65, type: 3}
       propertyPath: m_Name
