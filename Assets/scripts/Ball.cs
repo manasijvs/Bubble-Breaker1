@@ -17,6 +17,7 @@ public class Ball : MonoBehaviour
         level2,
     }
     public Level currentLevel;
+    private bool isBomb = false;
     private void Awake()
     {
         this.rigidbody = GetComponent<Rigidbody2D>();//reference to the component attached to the game object
@@ -26,6 +27,8 @@ public class Ball : MonoBehaviour
     {
         ResetBall();
         SetRandomBall();
+        //PowerUps powerup = FindFirstObjectByType<PowerUps>();
+        //powerup.SetBreakingBall(gameObject);
 
     }
 
@@ -95,6 +98,12 @@ public class Ball : MonoBehaviour
 
                 
             }
+            if (isBomb == false) // Check the flag before calling SetBreakingBall
+            {
+                PowerUps powerup = FindFirstObjectByType<PowerUps>();
+                powerup.SetBreakingBall(gameObject);
+            }
+            
         }
             
         if (collision.gameObject.CompareTag("bubble")) 
@@ -122,6 +131,10 @@ public class Ball : MonoBehaviour
                 count = 0;
             }
         }
+    }
+    public void SetAsBomb()
+    {
+        isBomb = true; // Set the flag when the ball is transformed into a bomb
     }
 
 }

@@ -43,7 +43,7 @@ public class Bubble : MonoBehaviour
 
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    /*private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.name == "Ball") 
         {
@@ -55,7 +55,7 @@ public class Bubble : MonoBehaviour
             //} 
         }
         
-    }
+    }*/
     public Sprite GetSpriteForState(int stateIndex)
     {
         return states[stateIndex];
@@ -83,15 +83,20 @@ public class Bubble : MonoBehaviour
     {
         spriteRenderer.sprite = newState;
     }
-    public bool IsBroken { get;set; }
+    public bool IsBroken = false;
 
     public void BreakBubble()
     {
+        if(!IsBroken)
+        {
         // Additional logic to handle breaking the bubble
         gamemanager gameManager = FindFirstObjectByType<gamemanager>();
+        // Update the score when a bubble is broken
+        gameManager.Hit(this);
         gameManager.OnBubbleBroken();
         IsBroken = true; // Set IsBroken flag to true when the bubble is broken
         Destroy(gameObject); // Destroy the bubble GameObject
+        }
     }
     
     /*public void OnBroken()

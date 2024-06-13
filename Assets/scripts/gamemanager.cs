@@ -443,7 +443,6 @@ public class gamemanager : MonoBehaviour
     }
 
     
-
     public void Hit(Bubble bubblepoint)
     {
         this.score += bubblepoint.points;
@@ -457,7 +456,6 @@ public class gamemanager : MonoBehaviour
 
     public void OnBubbleBroken()
     {
-        
         bubbleCount--;
         Debug.Log(bubbleCount);
         if (bubbleCount <= 1)
@@ -466,6 +464,11 @@ public class gamemanager : MonoBehaviour
             Debug.Log("loading level2");
             loadlevel("level2");
         }
+    }
+
+    public void breakbubble(Bubble bubble)
+    {
+        Destroy(bubble.gameObject);
     }
    
 

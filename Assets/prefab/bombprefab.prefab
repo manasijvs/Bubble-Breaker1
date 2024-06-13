@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7127554890423349159
+--- !u!1 &458717627573448247
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,40 +8,40 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8280173230516293094}
-  - component: {fileID: 6921363662240817445}
-  - component: {fileID: 5464852941671143978}
-  - component: {fileID: 7958784957414599714}
-  - component: {fileID: 2718363771925987365}
-  m_Layer: 13
-  m_Name: Ball
+  - component: {fileID: 8922171202291369546}
+  - component: {fileID: 4211000350558041069}
+  - component: {fileID: -5731063982740958950}
+  - component: {fileID: -8645695579628997830}
+  - component: {fileID: 2025784533664362552}
+  m_Layer: 14
+  m_Name: bombprefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8280173230516293094
+--- !u!4 &8922171202291369546
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7127554890423349159}
+  m_GameObject: {fileID: 458717627573448247}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -8, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 7, y: 7, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &6921363662240817445
+--- !u!212 &4211000350558041069
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7127554890423349159}
+  m_GameObject: {fileID: 458717627573448247}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -79,25 +79,25 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -3919779002189068522, guid: a83e51418db5c4646a60abab31f423e4, type: 3}
+  m_Sprite: {fileID: -1483665779731714255, guid: 716253223719f3d458a75c4ae4f0a959, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.64, y: 0.64}
+  m_Size: {x: 0.62, y: 0.62}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &5464852941671143978
+--- !u!50 &-5731063982740958950
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7127554890423349159}
+  m_GameObject: {fileID: 458717627573448247}
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -117,13 +117,13 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!58 &7958784957414599714
+--- !u!58 &-8645695579628997830
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7127554890423349159}
+  m_GameObject: {fileID: 458717627573448247}
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
@@ -153,23 +153,18 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.32
---- !u!114 &2718363771925987365
+--- !u!114 &2025784533664362552
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7127554890423349159}
+  m_GameObject: {fileID: 458717627573448247}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3ee462329ac1754c91bb84fcc76f8fa, type: 3}
+  m_Script: {fileID: 11500000, guid: 81c377b2ea85e034abc489b0cbeff97f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2000
-  spriteRenderer: {fileID: 6921363662240817445}
-  states:
-  - {fileID: -6429493399158520243, guid: 56a9bcbc23ae3c541b26ea921ea2de55, type: 3}
-  - {fileID: -8923911374754931897, guid: b149b16535bb40b4e8e3e06d32b47c14, type: 3}
-  - {fileID: 6286595657586805340, guid: 71c8b93a5f63ff448aefbc85ab90cb10, type: 3}
-  speedIncreaseFactor: 1
-  currentLevel: 0
+  speed: 2800
+  ballPrefab: {fileID: 7127554890423349159, guid: 34007990af8e60544927d4e140a02b65, type: 3}
+  explosionRadius: 6
