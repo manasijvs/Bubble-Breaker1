@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.UI;
 public class gamemanager : MonoBehaviour
 {
     public GameObject bubbleprefab;
@@ -20,7 +21,16 @@ public class gamemanager : MonoBehaviour
     public Bubble[] bubbles { get; private set; }
     private int bubbleCount;
     public TMP_Text ScoreText;
+    public GameObject EndScreenCanvas; // End screen Canvas
+    public TMP_Text EndScreenScoreText; // End screen score Text
     public static gamemanager instance;
+    public GameObject balls; // Reference to the ball game object
+    public GameObject paddles;
+    public GameObject lifebubble;
+    public GameObject bomb;
+    public GameObject hammer;
+    public GameObject rainbowball;
+    public GameObject ballPrefab;
     public enum Level
     {
         level1,
@@ -47,7 +57,7 @@ public class gamemanager : MonoBehaviour
         SceneManager.sceneLoaded += onlevelloaded;
     }
 
-    void AssignReferences()
+    public void AssignReferences()
     {
         // Reassign components that might be missing after scene load
         if (Bubbles == null)
@@ -60,6 +70,10 @@ public class gamemanager : MonoBehaviour
         {
             ScoreText = GameObject.Find("ScoreText").GetComponent<TextMeshProUGUI>();
         }
+        if(balls == null)
+        {
+            balls = GameObject.Find("Ball").gameObject;
+        }
     }
 
     void SetCurrentLevel(Level newlevel)
@@ -71,6 +85,7 @@ public class gamemanager : MonoBehaviour
     
     void Start()
     {
+        EndScreenCanvas.SetActive(false);
         bubbleSize = bubbleprefab.GetComponent<SpriteRenderer>().bounds.size.x;
         if (currentLevel == Level.level1)
         {
@@ -454,15 +469,40 @@ public class gamemanager : MonoBehaviour
         ScoreText.text = "Score: " + score;
     }
 
+    private void DisplayEndScreen()
+    {
+        Ball existingBall = FindFirstObjectByType<Ball>();
+        Destroy(existingBall.gameObject);
+        paddles.SetActive(false);
+        lifebubble.SetActive(false);
+        bomb.SetActive(false);
+        hammer.SetActive(false);
+        rainbowball.SetActive(false);
+        EndScreenCanvas.SetActive(true);
+        EndScreenScoreText.text = "Total Score: " + score;
+    }
+
+    public void nextlevel()
+    {
+        balls = Instantiate(ballPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        paddles.SetActive(true);
+        lifebubble.SetActive(true);
+        bomb.SetActive(true);
+        hammer.SetActive(true);
+        rainbowball.SetActive(true);
+        loadlevel("level2");
+    }
+
     public void OnBubbleBroken()
     {
         bubbleCount--;
         Debug.Log(bubbleCount);
-        if (bubbleCount <= 1)
+        if (bubbleCount == 0)
         {
             SetCurrentLevel(Level.level2);
+            DisplayEndScreen();
             Debug.Log("loading level2");
-            loadlevel("level2");
+            //loadlevel("level2");
         }
     }
 

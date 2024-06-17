@@ -18,6 +18,7 @@ public class Ball : MonoBehaviour
     }
     public Level currentLevel;
     private bool isBomb = false;
+    private bool isRainbow = false;
     private void Awake()
     {
         this.rigidbody = GetComponent<Rigidbody2D>();//reference to the component attached to the game object
@@ -66,11 +67,19 @@ public class Ball : MonoBehaviour
         Vector2 currentVelocity = this.rigidbody.velocity;
         this.rigidbody.velocity = currentVelocity * speedIncreaseFactor;
     }
-
-    
+    public void SetAsRainbow()
+    {
+        isRainbow = true; // Set the flag when the ball is in Rainbow mode
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (isRainbow)
+        {
+            HandleRainbowCollision(collision);
+            isRainbow = false; // Reset the flag after handling the collision
+            return;
+        }
         Bubble collidedBubble = collision.gameObject.GetComponent<Bubble>();
         if (collidedBubble != null)
         {
@@ -132,9 +141,34 @@ public class Ball : MonoBehaviour
             }
         }
     }
+    private void HandleRainbowCollision(Collision2D collision)
+    {
+        Bubble collidedBubble = collision.gameObject.GetComponent<Bubble>();
+        if (collidedBubble != null)
+        {
+
+            // Destroy all bubbles in the same row as the collided bubble
+            Vector3 bubblePosition = collidedBubble.transform.position;
+            Collider2D[] bubblesInRow = Physics2D.OverlapBoxAll(
+                new Vector2(bubblePosition.x, bubblePosition.y),
+                new Vector2(100, 1), // Assuming the bubbles are aligned horizontally
+                0);
+
+            foreach (Collider2D collider in bubblesInRow)
+            {
+                Bubble bubble = collider.GetComponent<Bubble>();
+                if (bubble != null)
+                {
+                    //gameManager.OnBubbleBroken(bubble);
+                    bubble.BreakBubble();
+                }
+            }
+        }
+    }
     public void SetAsBomb()
     {
         isBomb = true; // Set the flag when the ball is transformed into a bomb
     }
+    
 
 }

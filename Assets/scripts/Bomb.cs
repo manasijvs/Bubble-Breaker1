@@ -38,7 +38,8 @@ public class Bomb : MonoBehaviour
             Explode(collision.gameObject.transform.position);
         }
     }
-
+    
+    
     private void Explode(Vector2 explosionPoint)
     {
         // Find all game objects with the tag "bubble"
@@ -70,7 +71,6 @@ public class Bomb : MonoBehaviour
             // Instantiate a new ball at the bomb's position if no ball exists
             GameObject newBall = Instantiate(ballPrefab, transform.position, Quaternion.identity);
             newBall.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-
             // Set the breaking ball reference in PowerUps
             PowerUps powerup =FindFirstObjectByType<PowerUps>();
             if (powerup != null)
@@ -84,7 +84,6 @@ public class Bomb : MonoBehaviour
             existingBall.transform.position = transform.position;
             existingBall.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             //existingBall.ResetBall();
-
             // Set the breaking ball reference in PowerUps
             PowerUps powerup = FindFirstObjectByType<PowerUps>();
             if (powerup != null)
@@ -92,6 +91,8 @@ public class Bomb : MonoBehaviour
                 powerup.SetBreakingBall(existingBall.gameObject);
             }
         }
+        gamemanager gameManager = FindFirstObjectByType<gamemanager>();
+        gameManager.AssignReferences();
     }
 
      

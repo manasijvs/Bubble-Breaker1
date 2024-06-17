@@ -4,7 +4,7 @@ public class PowerUps : MonoBehaviour
 {
     public GameObject bombPrefab;
     public GameObject hammerPrefab;
-    public GameObject bubblePrefab;
+    public GameObject rainbowPrefab;
     private GameObject breakingBall;
     //public GameObject ballPrefab;
     
@@ -50,8 +50,13 @@ public class PowerUps : MonoBehaviour
         Instantiate(hammerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
     }
 
-    public void SpawnBubble()
+    public void SpawnRainbow()
     {
-        Instantiate(bubblePrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        //Instantiate(rainbowPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        if (breakingBall != null)
+        {
+            Ball ball = breakingBall.GetComponent<Ball>();
+            ball.SetAsRainbow(); // Set the ball to Rainbow mode
+        }
     }
 }
