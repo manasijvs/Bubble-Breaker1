@@ -28,13 +28,16 @@ public class gamemanager : MonoBehaviour
     public GameObject paddles;
     public GameObject lifebubble;
     public GameObject bomb;
-    public GameObject hammer;
+    //public GameObject hammer;
     public GameObject rainbowball;
     public GameObject ballPrefab;
     public enum Level
     {
         level1,
         level2,
+        level3,
+        level4,
+        level5
     }
     public Level currentLevel;
     
@@ -79,7 +82,11 @@ public class gamemanager : MonoBehaviour
     void SetCurrentLevel(Level newlevel)
     {
         currentLevel = newlevel; // or Level.Level1
-        Debug.Log("Setting Current Level to: " + currentLevel);
+        //Debug.Log("Setting Current Level to: " + currentLevel);
+    }
+    public Level GetCurrentLevel()
+    {
+        return currentLevel;
     }
 
     
@@ -98,6 +105,21 @@ public class gamemanager : MonoBehaviour
             AssignReferences();
             InitializeGridlevel2();
         }
+        else if (currentLevel == Level.level3)
+        {
+            Debug.Log("initializing level 3");
+            InitializeGridlevel3();
+        }
+        else if (currentLevel == Level.level4)
+        {
+            Debug.Log("initializing level 4");
+            InitializeGridlevel4();
+        }
+        else if (currentLevel == Level.level5)
+        {
+            Debug.Log("initializing level 5");
+            InitializeGridlevel5();
+        }
 
         UpdateScoreText();
         this.bubbles = FindObjectsByType<Bubble>(FindObjectsSortMode.None);
@@ -109,6 +131,55 @@ public class gamemanager : MonoBehaviour
         lives += amount;
     }
 
+    public void CreateNewLayerOfBubbleslevel5()
+    {
+        float topY = GetTopYPosition();
+        List<Bubble> newRow = new List<Bubble>();
+        for (int i = 0; i < columns; i++)
+        {
+            Vector2 position = new Vector2(i * bubbleSize * spacing, topY);
+            GameObject newBubble = Instantiate(bubbleprefab, position, Quaternion.identity, Bubbles);
+            Bubble Bubble = newBubble.GetComponent<Bubble>();
+            Bubble.SetRandomState();// Set a random state for the new bubble
+            newRow.Add(Bubble);
+            bubbleGrid.Add(new List<Bubble>() { Bubble });  
+        }
+        bubbleCount += newRow.Count; 
+        MoveExistingLayersDown();
+    }
+    public void CreateNewLayerOfBubbleslevel4()
+    {
+        float topY = GetTopYPosition();
+        List<Bubble> newRow = new List<Bubble>();
+        for (int i = 0; i < columns; i++)
+        {
+            Vector2 position = new Vector2(i * bubbleSize * spacing, topY);
+            GameObject newBubble = Instantiate(bubbleprefab, position, Quaternion.identity, Bubbles);
+            Bubble Bubble = newBubble.GetComponent<Bubble>();
+            Bubble.SetRandomState();// Set a random state for the new bubble
+            newRow.Add(Bubble);
+            bubbleGrid.Add(new List<Bubble>() { Bubble });  
+        }
+        bubbleCount += newRow.Count; 
+        MoveExistingLayersDown();
+    }
+
+    public void CreateNewLayerOfBubbleslevel3()
+    {
+        float topY = GetTopYPosition();
+        List<Bubble> newRow = new List<Bubble>();
+        for (int i = 0; i < columns; i++)
+        {
+            Vector2 position = new Vector2(i * bubbleSize * spacing, topY);
+            GameObject newBubble = Instantiate(bubbleprefab, position, Quaternion.identity, Bubbles);
+            Bubble Bubble = newBubble.GetComponent<Bubble>();
+            Bubble.SetRandomState();// Set a random state for the new bubble
+            newRow.Add(Bubble);
+            bubbleGrid.Add(new List<Bubble>() { Bubble });  
+        }
+        bubbleCount += newRow.Count; 
+        MoveExistingLayersDown();
+    }
     public void CreateNewLayerOfBubbleslevel2()
     {
         float topY = GetTopYPosition();
@@ -192,6 +263,15 @@ public class gamemanager : MonoBehaviour
             case Level.level2:
                 CreateNewLayerOfBubbleslevel2();
                 break;
+            case Level.level3:
+                CreateNewLayerOfBubbleslevel3();
+                break;
+            case Level.level4:
+                CreateNewLayerOfBubbleslevel4();
+                break;
+            case Level.level5:
+                CreateNewLayerOfBubbleslevel5();
+                break;
         }
         }
     }
@@ -203,6 +283,77 @@ public class gamemanager : MonoBehaviour
             NewGame();
         }
     }
+
+    void InitializeGridlevel5()
+    {
+        Debug.Log("Inside InitializeGridlevel5");
+        bubbleGrid = new List<List<Bubble>>();
+        
+        // Define the number of bubbles per row
+        int[] bubblesPerRow = {8,9,8,9,10};
+    
+        for (int i = 0; i < bubblesPerRow.Length; i++)
+        {
+            List<Bubble> row = new List<Bubble>();
+            
+            for (int j = 0; j < bubblesPerRow[i]; j++)
+            {
+                Bubble bubble = PlaceBubble(i, j, bubblesPerRow[i]);
+                row.Add(bubble);
+            }
+            
+            bubbleGrid.Add(row);
+        }
+        
+        //Debug.Log("added to grid");
+    }
+    void InitializeGridlevel4()
+    {
+        Debug.Log("Inside InitializeGridlevel4");
+        bubbleGrid = new List<List<Bubble>>();
+        
+        // Define the number of bubbles per row
+        int[] bubblesPerRow = {8,9,8,9};
+    
+        for (int i = 0; i < bubblesPerRow.Length; i++)
+        {
+            List<Bubble> row = new List<Bubble>();
+            
+            for (int j = 0; j < bubblesPerRow[i]; j++)
+            {
+                Bubble bubble = PlaceBubble(i, j, bubblesPerRow[i]);
+                row.Add(bubble);
+            }
+            
+            bubbleGrid.Add(row);
+        }
+        
+        //Debug.Log("added to grid");
+    }
+    void InitializeGridlevel3()
+    {
+        Debug.Log("Inside InitializeGridlevel3");
+        bubbleGrid = new List<List<Bubble>>();
+        
+        // Define the number of bubbles per row
+        int[] bubblesPerRow = {8,9,10};
+    
+        for (int i = 0; i < bubblesPerRow.Length; i++)
+        {
+            List<Bubble> row = new List<Bubble>();
+            
+            for (int j = 0; j < bubblesPerRow[i]; j++)
+            {
+                Bubble bubble = PlaceBubble(i, j, bubblesPerRow[i]);
+                row.Add(bubble);
+            }
+            
+            bubbleGrid.Add(row);
+        }
+        
+        //Debug.Log("added to grid");
+    }
+    
 
 
     void InitializeGridlevel2()
@@ -219,7 +370,7 @@ public class gamemanager : MonoBehaviour
             
             for (int j = 0; j < bubblesPerRow[i]; j++)
             {
-                Bubble bubble = PlaceBubble2(i, j, bubblesPerRow[i]);
+                Bubble bubble = PlaceBubble(i, j, bubblesPerRow[i]);
                 row.Add(bubble);
             }
             
@@ -228,7 +379,7 @@ public class gamemanager : MonoBehaviour
         
         //Debug.Log("added to grid");
     }
-    Bubble PlaceBubble2(int row, int col, int bubblesInRow)
+    Bubble PlaceBubble(int row, int col, int bubblesInRow)
     {
         float totalWidth = bubblesInRow * bubbleSize * spacing;
     
@@ -434,8 +585,20 @@ public class gamemanager : MonoBehaviour
         }
         else if (currentLevel == Level.level2)
         {
-             loadlevel("level2");
-        }                //load the first game scene
+            loadlevel("level2");
+        }
+        else if (currentLevel == Level.level3)
+        {
+            loadlevel("level3");
+        }
+        else if (currentLevel == Level.level4)
+        {
+            loadlevel("level4");
+        }
+        else if (currentLevel == Level.level5)
+        {
+            loadlevel("level5");
+        }            
     }
 
     private void loadlevel(string sceneName)
@@ -476,7 +639,7 @@ public class gamemanager : MonoBehaviour
         paddles.SetActive(false);
         lifebubble.SetActive(false);
         bomb.SetActive(false);
-        hammer.SetActive(false);
+        //hammer.SetActive(false);
         rainbowball.SetActive(false);
         EndScreenCanvas.SetActive(true);
         EndScreenScoreText.text = "Total Score: " + score;
@@ -488,9 +651,28 @@ public class gamemanager : MonoBehaviour
         paddles.SetActive(true);
         lifebubble.SetActive(true);
         bomb.SetActive(true);
-        hammer.SetActive(true);
+        //hammer.SetActive(true);
         rainbowball.SetActive(true);
-        loadlevel("level2");
+        if (currentLevel == Level.level1)
+        {
+            loadlevel("level1");
+        }
+        else if (currentLevel == Level.level2)
+        {
+            loadlevel("level2");
+        }
+        else if (currentLevel == Level.level3)
+        {
+            loadlevel("level3");
+        }
+        else if (currentLevel == Level.level4)
+        {
+            loadlevel("level4");
+        }
+        else if (currentLevel == Level.level5)
+        {
+            loadlevel("level5");
+        }    
     }
 
     public void OnBubbleBroken()
@@ -499,10 +681,27 @@ public class gamemanager : MonoBehaviour
         Debug.Log(bubbleCount);
         if (bubbleCount == 0)
         {
-            SetCurrentLevel(Level.level2);
+            if (currentLevel == Level.level1)
+            {
+                SetCurrentLevel(Level.level2);
+            }
+            else if (currentLevel == Level.level2)
+            {
+                SetCurrentLevel(Level.level3);
+            }
+            else if (currentLevel == Level.level3)
+            {
+                SetCurrentLevel(Level.level4);
+            }
+            else if (currentLevel == Level.level4)
+            {
+                SetCurrentLevel(Level.level5);
+            }
+            else if (currentLevel == Level.level5)
+            {
+                SetCurrentLevel(Level.level5);
+            }
             DisplayEndScreen();
-            Debug.Log("loading level2");
-            //loadlevel("level2");
         }
     }
 
@@ -510,7 +709,5 @@ public class gamemanager : MonoBehaviour
     {
         Destroy(bubble.gameObject);
     }
-   
-
-    
+       
 }

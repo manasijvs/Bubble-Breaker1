@@ -15,6 +15,9 @@ public class Ball : MonoBehaviour
     {
         level1,
         level2,
+        level3,
+        level4,
+        level5
     }
     public Level currentLevel;
     private bool isBomb = false;
@@ -136,6 +139,15 @@ public class Ball : MonoBehaviour
                     case Level.level2:
                         gameManager.CreateNewLayerOfBubbleslevel2();
                         break;
+                    case Level.level3:
+                        gameManager.CreateNewLayerOfBubbleslevel3();
+                        break;
+                    case Level.level4:
+                        gameManager.CreateNewLayerOfBubbleslevel4();
+                        break;
+                    case Level.level5:
+                        gameManager.CreateNewLayerOfBubbleslevel5();
+                        break;
                 }
                 count = 0;
             }
@@ -168,7 +180,6 @@ public class Ball : MonoBehaviour
     public void SetAsBomb()
     {
         isBomb = true; // Set the flag when the ball is transformed into a bomb
-    }
-    
+    }   
 
 }
