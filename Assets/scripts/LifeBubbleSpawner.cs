@@ -54,6 +54,13 @@ public class LifeBubbleSpawner : MonoBehaviour
                 Vector2 spawnPositionlevel4 = new Vector2(xPoslevel4, yPoslevel4); // Adjust Y position based on where you want to spawn
                 Instantiate(LifeBubbleprefab, spawnPositionlevel4, Quaternion.identity);
                 break;
+            case gamemanager.Level.level5:
+                float xPoslevel5 = Random.Range(-8.5f, 43.1f); // Adjust range based on your game area
+                float yPoslevel5 = 12.9f;
+                Vector2 spawnPositionlevel5 = new Vector2(xPoslevel5, yPoslevel5); // Adjust Y position based on where you want to spawn
+                Instantiate(LifeBubbleprefab, spawnPositionlevel5, Quaternion.identity);
+                break;
+            
         }
         
     }

@@ -37,7 +37,8 @@ public class gamemanager : MonoBehaviour
         level2,
         level3,
         level4,
-        level5
+        level5,
+        MainMenu
     }
     public Level currentLevel;
     
@@ -647,6 +648,11 @@ public class gamemanager : MonoBehaviour
 
     public void nextlevel()
     {
+        if (currentLevel == (Level)999)
+        {
+            loadlevel("MainMenu");
+            return;
+        } 
         balls = Instantiate(ballPrefab, new Vector3(0, 0, 0), Quaternion.identity);
         paddles.SetActive(true);
         lifebubble.SetActive(true);
@@ -669,10 +675,11 @@ public class gamemanager : MonoBehaviour
         {
             loadlevel("level4");
         }
-        else if (currentLevel == Level.level5)
+        else if(currentLevel == Level.level5)
         {
             loadlevel("level5");
-        }    
+        }
+           
     }
 
     public void OnBubbleBroken()
@@ -699,7 +706,7 @@ public class gamemanager : MonoBehaviour
             }
             else if (currentLevel == Level.level5)
             {
-                SetCurrentLevel(Level.level5);
+                currentLevel = (Level)999;
             }
             DisplayEndScreen();
         }

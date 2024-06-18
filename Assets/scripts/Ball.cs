@@ -7,7 +7,7 @@ public class Ball : MonoBehaviour
     public float speed = 2800.0f;
     
     private int count = 0;
-    private int maxhits = 500;
+    private int maxhits = 5;
     public SpriteRenderer spriteRenderer; // Reference to the SpriteRenderer component
     public Sprite[] states;
     public float speedIncreaseFactor = 2.0f;

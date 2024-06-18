@@ -17,7 +17,7 @@ public class Bomb : MonoBehaviour
     private void SetRandomTrajectory()
     {
         Vector2 force = Vector2.zero;//creates a vector force and initializes to 0
-        force.x = UnityEngine.Random.Range(-1f, 1f);//initializes x's value between -1 and 1.
+        //force.x = UnityEngine.Random.Range(-1f, 1f);//initializes x's value between -1 and 1.
         force.y = -1f;//initializes y's value to -1 to give a downward force
         this.rigidbody.AddForce(force.normalized * this.speed);//applies this force to the rigidbody component of the gameobject.
     }
