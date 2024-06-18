@@ -66,20 +66,45 @@ public class Bomb : MonoBehaviour
         Debug.Log("bomb object destroyed");
         Destroy(this.gameObject);
         Ball existingBall = FindFirstObjectByType<Ball>();
+        gamemanager gameManager = FindFirstObjectByType<gamemanager>();
         if (existingBall == null)
         {
+            Debug.Log("no existing ball, new ball added");
             // Instantiate a new ball at the bomb's position if no ball exists
             GameObject newBall = Instantiate(ballPrefab, transform.position, Quaternion.identity);
             newBall.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            //gameManager.SetBall(newBall);
+            Ball clone = newBall.GetComponent<Ball>();
+            switch(gameManager.GetCurrentLevel())
+            {
+                case gamemanager.Level.level1:
+                    clone.currentLevel=Ball.Level.level1;
+                    break;
+                case gamemanager.Level.level2:
+                    clone.currentLevel=Ball.Level.level2;
+                    break;
+                case gamemanager.Level.level3:
+                    clone.currentLevel=Ball.Level.level3;
+                    break;
+                case gamemanager.Level.level4:
+                    clone.currentLevel=Ball.Level.level4;
+                    break;
+                case gamemanager.Level.level5:
+                    clone.currentLevel=Ball.Level.level5;
+                    break;
+            }
+            
             // Set the breaking ball reference in PowerUps
             PowerUps powerup =FindFirstObjectByType<PowerUps>();
             if (powerup != null)
             {
                 powerup.SetBreakingBall(newBall);
             }
+            
         }
         else
         {
+            Debug.Log("has existing ball");
             // Move the existing ball to the bomb's position and reset its state
             existingBall.transform.position = transform.position;
             existingBall.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
@@ -91,7 +116,7 @@ public class Bomb : MonoBehaviour
                 powerup.SetBreakingBall(existingBall.gameObject);
             }
         }
-        gamemanager gameManager = FindFirstObjectByType<gamemanager>();
+        //gamemanager gameManager = FindFirstObjectByType<gamemanager>();
         gameManager.AssignReferences();
     }
 

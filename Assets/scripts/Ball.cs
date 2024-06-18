@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -22,6 +23,13 @@ public class Ball : MonoBehaviour
     public Level currentLevel;
     private bool isBomb = false;
     private bool isRainbow = false;
+    public event Action OnLifeLost;
+
+    public void LoseLife()
+    {
+        OnLifeLost?.Invoke();
+    }
+
     private void Awake()
     {
         this.rigidbody = GetComponent<Rigidbody2D>();//reference to the component attached to the game object
@@ -46,7 +54,7 @@ public class Ball : MonoBehaviour
     private void SetRandomTrajectory()
     {
         Vector2 force = Vector2.zero;//creates a vector force and initializes to 0
-        force.x = Random.Range(-1f, 1f);//initializes x's value between -1 and 1.
+        force.x = UnityEngine.Random.Range(-1f, 1f);//initializes x's value between -1 and 1.
         force.y = -1f;//initializes y's value to -1 to give a downward force
         this.rigidbody.AddForce(force.normalized * this.speed);//applies this force to the rigidbody component of the gameobject.
     }
@@ -54,7 +62,7 @@ public class Ball : MonoBehaviour
      public void SetRandomBall()
     {
         // Get a random sprite from the states array
-        Sprite randomSprite = states[Random.Range(0, states.Length)];
+        Sprite randomSprite = states[UnityEngine.Random.Range(0, states.Length)];
 
         // Set the sprite for the SpriteRenderer
         spriteRenderer.sprite = randomSprite;
@@ -180,6 +188,7 @@ public class Ball : MonoBehaviour
     public void SetAsBomb()
     {
         isBomb = true; // Set the flag when the ball is transformed into a bomb
-    }   
+    }
+    
 
 }

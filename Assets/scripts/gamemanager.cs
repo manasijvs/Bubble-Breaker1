@@ -251,8 +251,14 @@ public class gamemanager : MonoBehaviour
         MoveExistingLayersDown();
     }
 
+    public void SetBall(GameObject cloneBall)
+    {
+        balls = cloneBall;
+    }
+
     public void DecrementLife()
     {
+        
         lives--;
         if (lives < 3)
         {
@@ -283,6 +289,21 @@ public class gamemanager : MonoBehaviour
             resetlevel();
             NewGame();
         }
+    }
+    public void RegisterBall(GameObject newBall)
+    {
+        SetBall(newBall);
+        Ball ballComponent = newBall.GetComponent<Ball>();
+        if (ballComponent != null)
+        {
+            ballComponent.OnLifeLost += HandleLifeLost;
+        }
+    }
+
+    private void HandleLifeLost()
+    {
+        life();
+        DecrementLife();
     }
 
     void InitializeGridlevel5()

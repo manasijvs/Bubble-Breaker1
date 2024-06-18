@@ -4,10 +4,13 @@ public class misslives : MonoBehaviour
 {
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "Ball") 
+        Ball ballComponent = collision.gameObject.GetComponent<Ball>();
+        if (ballComponent != null) 
         {
-            FindAnyObjectByType<gamemanager>().life();
-            FindAnyObjectByType<gamemanager>().DecrementLife();
+            ballComponent.LoseLife(); // Trigger the event
+            gamemanager gameManager = FindFirstObjectByType<gamemanager>();
+            gameManager.life();
+            gameManager.DecrementLife();
         }
         
         if(collision.gameObject.CompareTag("lifebubble"))
