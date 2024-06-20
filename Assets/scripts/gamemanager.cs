@@ -282,6 +282,11 @@ public class gamemanager : MonoBehaviour
         }
         }
     }
+    public void SetBallReference(GameObject newBall)
+    {
+        ball = newBall.GetComponent<Ball>();
+    }
+
     public void life()
     {
         if (this.lives == 0)

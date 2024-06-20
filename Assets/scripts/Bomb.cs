@@ -73,7 +73,7 @@ public class Bomb : MonoBehaviour
             // Instantiate a new ball at the bomb's position if no ball exists
             GameObject newBall = Instantiate(ballPrefab, transform.position, Quaternion.identity);
             newBall.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            //gameManager.SetBall(newBall);
+            gameManager.SetBallReference(newBall);
             Ball clone = newBall.GetComponent<Ball>();
             switch(gameManager.GetCurrentLevel())
             {
