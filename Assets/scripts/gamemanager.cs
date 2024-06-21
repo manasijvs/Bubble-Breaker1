@@ -21,8 +21,11 @@ public class gamemanager : MonoBehaviour
     public Bubble[] bubbles { get; private set; }
     private int bubbleCount;
     public TMP_Text ScoreText;
+    public TMP_Text CoinText;
     public GameObject EndScreenCanvas; // End screen Canvas
-    public TMP_Text EndScreenScoreText; // End screen score Text
+    public TMP_Text EndScreenScoreText;
+    public TMP_Text EndScreenCoinsText;
+    private int coins; // End screen score Text
     public static gamemanager instance;
     public GameObject balls; // Reference to the ball game object
     public GameObject paddles;
@@ -31,6 +34,9 @@ public class gamemanager : MonoBehaviour
     //public GameObject hammer;
     public GameObject rainbowball;
     public GameObject ballPrefab;
+    public PowerUps powerUps;
+    private int spentScore;
+
     public enum Level
     {
         level1,
@@ -42,8 +48,6 @@ public class gamemanager : MonoBehaviour
     }
     public Level currentLevel;
     
-
-
     private List<List<Bubble>> bubbleGrid;
 
     private void Awake() //when script is first initialized, it will be called. initializing variables or states before the game starts.
@@ -657,6 +661,26 @@ public class gamemanager : MonoBehaviour
      private void UpdateScoreText()
     {
         ScoreText.text = "Score: " + score;
+        CalculateCoins();
+    }
+    private void CalculateCoins()
+    {
+        int availableScore = score - spentScore;
+        coins = (availableScore / 50) * 20;
+        CoinText.text = "Coins: " + coins;
+        powerUps.UpdateCoins(coins);
+    }
+    public bool DecreaseCoins(int amount)
+    {
+        if (coins >= amount)
+        {
+            coins -= amount;
+            spentScore += (amount / 20) * 50;
+            CoinText.text = "Coins: " + coins;
+            powerUps.UpdateCoins(coins);
+            return true;
+        }
+        return false;
     }
 
     private void DisplayEndScreen()
@@ -669,7 +693,8 @@ public class gamemanager : MonoBehaviour
         //hammer.SetActive(false);
         rainbowball.SetActive(false);
         EndScreenCanvas.SetActive(true);
-        EndScreenScoreText.text = "Total Score: " + score;
+        EndScreenScoreText.text = "Total Score: " + score; 
+        EndScreenCoinsText.text = "Coins: " + coins;
     }
 
     public void nextlevel()

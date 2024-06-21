@@ -1,19 +1,42 @@
 using UnityEngine;
-
+using UnityEngine.UI;
 public class PowerUps : MonoBehaviour
 {
     public GameObject bombPrefab;
-    public GameObject hammerPrefab;
     public GameObject rainbowPrefab;
     private GameObject breakingBall;
+    public Button bombButton; // Reference to the Bomb button
+    public Button rainbowButton; 
     //public GameObject ballPrefab;
-    
+    private int coins;
+    private gamemanager gameManager;
+
+    private void Start()
+    {
+        gameManager = FindFirstObjectByType<gamemanager>();
+        UpdatePowerUpButtons();
+    }
+
+    public void UpdateCoins(int newCoinCount)
+    {
+        coins = newCoinCount;
+        UpdatePowerUpButtons();
+    }
+
+    private void UpdatePowerUpButtons()
+    {
+        bool canUsePowerUp = coins >= 20;
+        bombButton.interactable = canUsePowerUp;
+        rainbowButton.interactable = canUsePowerUp;
+    }
 
     public void ChangeBreakingBallToBomb()
     {
         // Make sure there's a breaking ball to replace
         if (breakingBall != null)
         {
+            gameManager.DecreaseCoins(20);
+            UpdatePowerUpButtons();
             Ball ball = FindFirstObjectByType<Ball>();
             ball.SetAsBomb(); // Set the flag
             
@@ -31,30 +54,20 @@ public class PowerUps : MonoBehaviour
         }
     }
 
-    /*private void HandleBombExplosion(Vector3 position)
-    {
-        // Instantiate a new ball at the bomb's position after the explosion
-        Debug.Log("instantiating new ball");
-        GameObject newBall = Instantiate(ballPrefab, position, Quaternion.identity);
-        SetBreakingBall(newBall);
-    }*/
-
     public void SetBreakingBall(GameObject ball)
     {
         Debug.Log("set breaking ball as ball");
         breakingBall = ball;
     }
 
-    public void SpawnHammer()
-    {
-        Instantiate(hammerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-    }
 
     public void SpawnRainbow()
     {
         //Instantiate(rainbowPrefab, new Vector3(0, 0, 0), Quaternion.identity);
         if (breakingBall != null)
         {
+            gameManager.DecreaseCoins(20);
+            UpdatePowerUpButtons();
             Ball ball = breakingBall.GetComponent<Ball>();
             ball.SetAsRainbow(); // Set the ball to Rainbow mode
         }
