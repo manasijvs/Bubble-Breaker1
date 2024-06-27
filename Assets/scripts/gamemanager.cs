@@ -8,11 +8,11 @@ public class gamemanager : MonoBehaviour
     public GameObject bubbleprefab;
     public Sprite[] states; 
     public Transform Bubbles;
-    public int rows = 2;
-    public int columns = 9;
-    public float bubbleSize ;
-    public float spacing = 50f; 
-    public float rowOffset = 1.0f;
+    public int rows ;
+    public int columns;
+    public float bubbleSize = 5;
+    public float spacing = 1f; 
+    //public float rowOffset = 1.0f;
     public Ball ball { get; private set; }//class classname get->ball's value can be read outside the class, private set-> its's value can be modified only within the class.
     public Paddle paddle { get; private set; }
     //public int level;
@@ -52,16 +52,7 @@ public class gamemanager : MonoBehaviour
 
     private void Awake() //when script is first initialized, it will be called. initializing variables or states before the game starts.
     {
-        /*if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }*///don't destroy the gameobject this gamemanager is attached to while loading a new scene. here the game object we created is game manager.
+        
         SceneManager.sceneLoaded += onlevelloaded;
     }
 
@@ -73,7 +64,6 @@ public class gamemanager : MonoBehaviour
             Bubbles = GameObject.Find("Bubbles").transform;
         }
 
-        // Reassign other necessary components, e.g., ScoreText
         if (ScoreText == null)
         {
             ScoreText = GameObject.Find("ScoreText").GetComponent<TextMeshProUGUI>();
@@ -86,8 +76,7 @@ public class gamemanager : MonoBehaviour
 
     void SetCurrentLevel(Level newlevel)
     {
-        currentLevel = newlevel; // or Level.Level1
-        //Debug.Log("Setting Current Level to: " + currentLevel);
+        currentLevel = newlevel; 
     }
     public Level GetCurrentLevel()
     {
@@ -98,7 +87,7 @@ public class gamemanager : MonoBehaviour
     void Start()
     {
         EndScreenCanvas.SetActive(false);
-        bubbleSize = bubbleprefab.GetComponent<SpriteRenderer>().bounds.size.x;
+        //bubbleSize = bubbleprefab.GetComponent<SpriteRenderer>().bounds.size.x;
         if (currentLevel == Level.level1)
         {
             Debug.Log("initializing level 1");
@@ -161,7 +150,7 @@ public class gamemanager : MonoBehaviour
             Vector2 position = new Vector2(i * bubbleSize * spacing, topY);
             GameObject newBubble = Instantiate(bubbleprefab, position, Quaternion.identity, Bubbles);
             Bubble Bubble = newBubble.GetComponent<Bubble>();
-            Bubble.SetRandomState();// Set a random state for the new bubble
+            Bubble.SetRandomState();
             newRow.Add(Bubble);
             bubbleGrid.Add(new List<Bubble>() { Bubble });  
         }
@@ -178,7 +167,7 @@ public class gamemanager : MonoBehaviour
             Vector2 position = new Vector2(i * bubbleSize * spacing, topY);
             GameObject newBubble = Instantiate(bubbleprefab, position, Quaternion.identity, Bubbles);
             Bubble Bubble = newBubble.GetComponent<Bubble>();
-            Bubble.SetRandomState();// Set a random state for the new bubble
+            Bubble.SetRandomState();
             newRow.Add(Bubble);
             bubbleGrid.Add(new List<Bubble>() { Bubble });  
         }
@@ -194,10 +183,11 @@ public class gamemanager : MonoBehaviour
             Vector2 position = new Vector2(i * bubbleSize * spacing, topY);
             GameObject newBubble = Instantiate(bubbleprefab, position, Quaternion.identity, Bubbles);
             Bubble Bubble = newBubble.GetComponent<Bubble>();
-            Bubble.SetRandomState();// Set a random state for the new bubble
+            Bubble.SetRandomState();
             newRow.Add(Bubble);
-            bubbleGrid.Add(new List<Bubble>() { Bubble });  
+            //bubbleGrid.Add(new List<Bubble>() { Bubble });  
         }
+        bubbleGrid.Add(newRow);
         bubbleCount += newRow.Count; 
         MoveExistingLayersDown();
     }
@@ -207,7 +197,7 @@ public class gamemanager : MonoBehaviour
         if (Bubbles == null)
         {
             Debug.Log("Bubbles object is null or has been destroyed.");
-            return 0f; // Return a default value or handle the case as needed
+            return 0f; 
         }
         if ( Bubbles.childCount > 0)
         {
@@ -245,7 +235,6 @@ public class gamemanager : MonoBehaviour
             Vector2 position = new Vector2(i * bubbleSize * spacing, topY);
             GameObject newBubble = Instantiate(bubbleprefab, position, Quaternion.identity, Bubbles);
             Bubble Bubble = newBubble.GetComponent<Bubble>();
-            //Bubble.SetRandomState();// Set a random state for the new bubble
             Sprite stateSprite = Bubble.GetSpriteForState(rowStates[i]);
             Bubble.SetStateBubble(stateSprite);
             newRow.Add(Bubble);
@@ -321,7 +310,7 @@ public class gamemanager : MonoBehaviour
         bubbleGrid = new List<List<Bubble>>();
         
         // Define the number of bubbles per row
-        int[] bubblesPerRow = {8,9,8,9,10};
+        int[] bubblesPerRow = {5,7,9,7,9};
     
         for (int i = 0; i < bubblesPerRow.Length; i++)
         {
@@ -336,7 +325,6 @@ public class gamemanager : MonoBehaviour
             bubbleGrid.Add(row);
         }
         
-        //Debug.Log("added to grid");
     }
     void InitializeGridlevel4()
     {
@@ -344,7 +332,7 @@ public class gamemanager : MonoBehaviour
         bubbleGrid = new List<List<Bubble>>();
         
         // Define the number of bubbles per row
-        int[] bubblesPerRow = {8,9,8,9};
+        int[] bubblesPerRow = {7,9,7,9};
     
         for (int i = 0; i < bubblesPerRow.Length; i++)
         {
@@ -358,8 +346,7 @@ public class gamemanager : MonoBehaviour
             
             bubbleGrid.Add(row);
         }
-        
-        //Debug.Log("added to grid");
+
     }
     void InitializeGridlevel3()
     {
@@ -367,7 +354,7 @@ public class gamemanager : MonoBehaviour
         bubbleGrid = new List<List<Bubble>>();
         
         // Define the number of bubbles per row
-        int[] bubblesPerRow = {8,9,10};
+        int[] bubblesPerRow = {5,7,9};
     
         for (int i = 0; i < bubblesPerRow.Length; i++)
         {
@@ -381,8 +368,7 @@ public class gamemanager : MonoBehaviour
             
             bubbleGrid.Add(row);
         }
-        
-        //Debug.Log("added to grid");
+
     }
     
 
@@ -393,7 +379,7 @@ public class gamemanager : MonoBehaviour
         bubbleGrid = new List<List<Bubble>>();
         
         // Define the number of bubbles per row
-        int[] bubblesPerRow = {8,9};
+        int[] bubblesPerRow = {7,9};
     
         for (int i = 0; i < bubblesPerRow.Length; i++)
         {
@@ -407,8 +393,7 @@ public class gamemanager : MonoBehaviour
             
             bubbleGrid.Add(row);
         }
-        
-        //Debug.Log("added to grid");
+
     }
     Bubble PlaceBubble(int row, int col, int bubblesInRow)
     {
@@ -418,7 +403,7 @@ public class gamemanager : MonoBehaviour
         float xOffset = (columns * bubbleSize * spacing - totalWidth) * 0.5f;
 
         // Set the position to the top center of the grid
-        Vector2 position = new Vector2((col * bubbleSize * spacing) + xOffset, (row - 1) * bubbleSize * spacing);
+        Vector2 position = new Vector2((col * bubbleSize * spacing) + xOffset, (row-1) * bubbleSize * spacing);
 
         GameObject bubbleGO = Instantiate(bubbleprefab, position, Quaternion.identity, Bubbles);//creating a copy of bubble prefab and placing it in position
         bubbleGO.tag = "bubble";
@@ -434,7 +419,7 @@ public class gamemanager : MonoBehaviour
         bubbleGrid = new List<List<Bubble>>();
 
         // Define the number of bubbles per row
-        int[] bubblesPerRow = { 8, 9 };
+        int[] bubblesPerRow = { 7, 9 };
 
         for (int i = 0; i < bubblesPerRow.Length; i++)
         {
@@ -487,29 +472,25 @@ public class gamemanager : MonoBehaviour
             state2 = Random.Range(0, states.Length);
         } while (state2 == state1);
 
-        // Decide where to place the blocks of the first and second states
-        int blockStartIndex1 = Random.Range(0, bubblesInRow - 3); // Ensure there's enough space for the first block
-        int blockStartIndex2 = Random.Range(blockStartIndex1 + 4, bubblesInRow - 1); // Ensure there's enough space for the second block
+        int blockStartIndex1 = Random.Range(0, bubblesInRow - 3); 
+        int blockStartIndex2 = Random.Range(blockStartIndex1 + 4, bubblesInRow - 1); 
 
-        // Fill the rowStates array with the first block of state1
         for (int i = 0; i < 4; i++)
         {
             rowStates[blockStartIndex1 + i] = state1;
         }
 
-        // Fill the rowStates array with the second block of state2
         for (int i = blockStartIndex2; i < bubblesInRow; i++)
         {
             rowStates[i] = state2;
         }
 
-        // Fill the gaps with state1
         for (int i = 0; i < blockStartIndex1; i++)
         {
             rowStates[i] = state1;
         }
 
-        // Shuffle the rowStates array to distribute the states randomly within the row
+        // Shuffle the rowStates array 
         ShuffleArray(rowStates);
 
         return rowStates;
@@ -544,8 +525,7 @@ public class gamemanager : MonoBehaviour
         }
 
         currentBubble.BreakBubble();
-        //Debug.Log("Breaking bubble at position: ");
-        currentBubble.IsBroken = true; // Set a flag to indicate that the bubble has been broken
+        currentBubble.IsBroken = true; 
 
         List<Bubble> adjacentBubbles = GetAdjacentBubbles(currentBubble);
         foreach (Bubble adjacentBubble in adjacentBubbles)
@@ -561,41 +541,37 @@ public class gamemanager : MonoBehaviour
         float x = position.x;
         float y = position.y;
 
-        // Adjust the tolerance value for adjacency checks
-        float tolerance = 0.1f;
+        AddAdjacentBubble(adjacentBubbles, x - bubbleSize, y);
+        AddAdjacentBubble(adjacentBubbles, x + bubbleSize, y);
+        AddAdjacentBubble(adjacentBubbles, x, y - bubbleSize);
+        AddAdjacentBubble(adjacentBubbles, x, y + bubbleSize);
 
-        // Check adjacent positions for bubbles (left, right, top, bottom)
-        AddAdjacentBubble(adjacentBubbles, x - bubbleSize, y, tolerance);
-        AddAdjacentBubble(adjacentBubbles, x + bubbleSize, y, tolerance);
-        AddAdjacentBubble(adjacentBubbles, x, y - bubbleSize, tolerance);
-        AddAdjacentBubble(adjacentBubbles, x, y + bubbleSize, tolerance);
-
-        AddAdjacentBubble(adjacentBubbles,x - bubbleSize, y - bubbleSize, tolerance);
-        AddAdjacentBubble(adjacentBubbles,x + bubbleSize, y - bubbleSize, tolerance);
-        AddAdjacentBubble(adjacentBubbles,x - bubbleSize, y + bubbleSize, tolerance);
-        AddAdjacentBubble(adjacentBubbles,x + bubbleSize, y + bubbleSize, tolerance);
+        AddAdjacentBubble(adjacentBubbles,x - bubbleSize, y - bubbleSize);
+        AddAdjacentBubble(adjacentBubbles,x + bubbleSize, y - bubbleSize);
+        AddAdjacentBubble(adjacentBubbles,x - bubbleSize, y + bubbleSize);
+        AddAdjacentBubble(adjacentBubbles,x + bubbleSize, y + bubbleSize);
 
 
         return adjacentBubbles;
     }
-    void AddAdjacentBubble(List<Bubble> adjacentBubbles, float x, float y, float tolerance)
+    void AddAdjacentBubble(List<Bubble> adjacentBubbles, float x, float y)
     {
-        Bubble bubble = GetBubbleAtPosition(x, y, tolerance);
+        Bubble bubble = GetBubbleAtPosition(x, y);
         if (bubble != null)
         {
             adjacentBubbles.Add(bubble);
         }
     }
 
-    Bubble GetBubbleAtPosition(float x, float y, float tolerance)
+    Bubble GetBubbleAtPosition(float x, float y)
     {
         foreach (var row in bubbleGrid)
         {
             foreach (var bubble in row)
             {
                 if (bubble != null &&
-                    Mathf.Abs(bubble.transform.position.x - x) < tolerance && 
-                    Mathf.Abs(bubble.transform.position.y - y) < tolerance)
+                    Mathf.Approximately(bubble.transform.position.x, x)  && 
+                    Mathf.Approximately(bubble.transform.position.y , y))
                 {
                     return bubble;
                 }

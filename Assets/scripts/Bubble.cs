@@ -6,7 +6,9 @@ public class Bubble : MonoBehaviour
     public SpriteRenderer spriteRenderer; // Reference to the SpriteRenderer component
     public Sprite[] states; // Array to hold different sprite states
     public int points = 10;
-     private int stateIndex; // Points value for the bubble
+    private int stateIndex; // Points value for the bubble
+    public int Row;
+    public int Column;
     public int health { get; private set; }
 
     public void Start()

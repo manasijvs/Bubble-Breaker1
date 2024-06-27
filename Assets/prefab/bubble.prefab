@@ -153,3 +153,4 @@ MonoBehaviour:
   - {fileID: -8923911374754931897, guid: b149b16535bb40b4e8e3e06d32b47c14, type: 3}
   - {fileID: 6286595657586805340, guid: 71c8b93a5f63ff448aefbc85ab90cb10, type: 3}
   points: 10
+  IsBroken: 0

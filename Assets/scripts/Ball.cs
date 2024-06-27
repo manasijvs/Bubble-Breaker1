@@ -5,7 +5,7 @@ using UnityEngine;
 public class Ball : MonoBehaviour
 {
     public new Rigidbody2D rigidbody { get; private set; }
-    public float speed = 2800.0f;
+    public float speed = 2600.0f;
     
     private int count = 0;
     private int maxhits = 5;
