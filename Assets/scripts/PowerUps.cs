@@ -56,7 +56,6 @@ public class PowerUps : MonoBehaviour
 
     public void SetBreakingBall(GameObject ball)
     {
-        Debug.Log("set breaking ball as ball");
         breakingBall = ball;
     }
 

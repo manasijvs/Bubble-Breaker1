@@ -167,4 +167,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2800
   ballPrefab: {fileID: 7127554890423349159, guid: 34007990af8e60544927d4e140a02b65, type: 3}
-  explosionRadius: 6
+  explosionRadius: 10

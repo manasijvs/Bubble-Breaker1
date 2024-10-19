@@ -1,12 +1,10 @@
-using System;
-using Unity.VisualScripting;
-using UnityEngine;
+using System;//contains datatypes such as int, bool, string etc...
+using UnityEngine;//specific to unity.contains fundamental classes and structures. contains gameobject, rigidbody, physics, collider, ui etc...
 
 public class Ball : MonoBehaviour
 {
     public new Rigidbody2D rigidbody { get; private set; }
     public float speed = 2600.0f;
-    
     private int count = 0;
     private int maxhits = 5;
     public SpriteRenderer spriteRenderer; // Reference to the SpriteRenderer component
@@ -23,7 +21,7 @@ public class Ball : MonoBehaviour
     public Level currentLevel;
     private bool isBomb = false;
     private bool isRainbow = false;
-    public event Action OnLifeLost;
+    public event Action OnLifeLost;//event = classes to coomunicates with each other and objects to react to actions
 
     public void LoseLife()
     {
@@ -33,14 +31,12 @@ public class Ball : MonoBehaviour
     private void Awake()
     {
         this.rigidbody = GetComponent<Rigidbody2D>();//reference to the component attached to the game object
-    }
+    }   
 
     private void Start()
     {
         ResetBall();
         SetRandomBall();
-        //PowerUps powerup = FindFirstObjectByType<PowerUps>();
-        //powerup.SetBreakingBall(gameObject);
 
     }
 
@@ -48,7 +44,7 @@ public class Ball : MonoBehaviour
     {
         //this.transform.position = Vector2.zero;//position of object in 3d space. vector2.zero->same as vector2(0,0)
         this.rigidbody.velocity = Vector2.zero;
-        Invoke(nameof(SetRandomTrajectory), 1f);//call the fn byname with a delay of 1sec
+        Invoke(nameof(SetRandomTrajectory), 1f);//to make the ball go only after a delay of 1 sec
     }
 
     private void SetRandomTrajectory()
@@ -56,7 +52,7 @@ public class Ball : MonoBehaviour
         Vector2 force = Vector2.zero;//creates a vector force and initializes to 0
         force.x = UnityEngine.Random.Range(-1f, 1f);//initializes x's value between -1 and 1.
         force.y = -1f;//initializes y's value to -1 to give a downward force
-        this.rigidbody.AddForce(force.normalized * this.speed);//applies this force to the rigidbody component of the gameobject.
+        this.rigidbody.AddForce(force.normalized * this.speed);//applies this force to the rigidbody component of the gameobject. normalises to 1 to make sure force is applied without changing the direction.
     }
 
      public void SetRandomBall()
@@ -83,7 +79,7 @@ public class Ball : MonoBehaviour
         isRainbow = true; // Set the flag when the ball is in Rainbow mode
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)//collision2d= contains info about collision. collision = store collision info such as gameobjects, contact point, velocity etc...
     {
         if (isRainbow)
         {
@@ -95,41 +91,26 @@ public class Ball : MonoBehaviour
         if (collidedBubble != null)
         {
             gamemanager gameManager = FindFirstObjectByType<gamemanager>();
-            //Debug.Log("Ball collided with bubble at position: "+ collision.gameObject.transform.position);
-           
-            
             
             if (collidedBubble.GetStateBubble() == GetStateBall())
             {
-                
-                //Debug.Log("Ball and bubble have the same state.");
-                //Debug.Break();
                 gameManager.BreakConnectedBubbles(collidedBubble);            
             }
 
             else //if (collidedBubble.GetStateBubble() != GetStateBall())
             {
-              
-                
-                //Debug.Log("Ball and bubble have different states");
-                //Debug.Break();
                 gameManager.ReplaceBubbleWithBallState(collidedBubble, this);
-                //Debug.Log("Bubble state changed to match ball state.");
-
-                
             }
             if (isBomb == false) // Check the flag before calling SetBreakingBall
             {
                 PowerUps powerup = FindFirstObjectByType<PowerUps>();
                 powerup.SetBreakingBall(gameObject);
-            }
-            
+            }   
         }
             
         if (collision.gameObject.CompareTag("bubble")) 
         {
             SetRandomBall();
-            //Debug.Log("state of ball changed after collision");
         }
 
         if (collision.gameObject.CompareTag("paddle"))
@@ -163,10 +144,9 @@ public class Ball : MonoBehaviour
     }
     private void HandleRainbowCollision(Collision2D collision)
     {
-        Bubble collidedBubble = collision.gameObject.GetComponent<Bubble>();
+        Bubble collidedBubble = collision.gameObject.GetComponent<Bubble>();//attemps to retrieve bubble component from collidedBubble.
         if (collidedBubble != null)
         {
-
             // Destroy all bubbles in the same row as the collided bubble
             Vector3 bubblePosition = collidedBubble.transform.position;
             Collider2D[] bubblesInRow = Physics2D.OverlapBoxAll(
@@ -179,7 +159,6 @@ public class Ball : MonoBehaviour
                 Bubble bubble = collider.GetComponent<Bubble>();
                 if (bubble != null)
                 {
-                    //gameManager.OnBubbleBroken(bubble);
                     bubble.BreakBubble();
                 }
             }

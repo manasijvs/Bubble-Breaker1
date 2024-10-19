@@ -158,7 +158,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      LifeBubbleprefab_0: -2092613913008943611
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

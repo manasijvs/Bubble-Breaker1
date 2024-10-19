@@ -49,12 +49,11 @@ public class Paddle : MonoBehaviour
 
         if (ball != null)
         {
-            Vector2 contactPoint = collision.GetContact(0).point;
-            Vector3 paddleCenter = this.transform.position; // The paddle's center position
+            Vector2 contactPoint = collision.GetContact(0).point;//first contact point. point= position of the contact point.
+            Vector3 paddleCenter = this.transform.position; // The paddle's center position. transform.position provides the position of the pivot point of the gameobject. if the pivot is in the center, it provides the center position.
 
             // Calculate the offset where on the paddle the ball hits relative to the middle point
             float offset =contactPoint.x-paddleCenter.x;
-            //Debug.Log(offset);
 
             // Determine if the ball hits the left or right part of the paddle
             float hitDirection; //= (offset < 0) ? -1 : 1; // -1 for left, 1 for right

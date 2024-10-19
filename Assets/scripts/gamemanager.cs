@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using TMPro;
-using UnityEngine.UI;
 public class gamemanager : MonoBehaviour
 {
     public GameObject bubbleprefab;
@@ -52,7 +51,6 @@ public class gamemanager : MonoBehaviour
 
     private void Awake() //when script is first initialized, it will be called. initializing variables or states before the game starts.
     {
-        
         SceneManager.sceneLoaded += onlevelloaded;
     }
 
@@ -90,28 +88,23 @@ public class gamemanager : MonoBehaviour
         //bubbleSize = bubbleprefab.GetComponent<SpriteRenderer>().bounds.size.x;
         if (currentLevel == Level.level1)
         {
-            Debug.Log("initializing level 1");
             InitializeGridlevel1();
         }
         else if (currentLevel == Level.level2)
         {
-            Debug.Log("initializing level 2");
             AssignReferences();
             InitializeGridlevel2();
         }
         else if (currentLevel == Level.level3)
         {
-            Debug.Log("initializing level 3");
             InitializeGridlevel3();
         }
         else if (currentLevel == Level.level4)
         {
-            Debug.Log("initializing level 4");
             InitializeGridlevel4();
         }
         else if (currentLevel == Level.level5)
         {
-            Debug.Log("initializing level 5");
             InitializeGridlevel5();
         }
 
@@ -136,8 +129,9 @@ public class gamemanager : MonoBehaviour
             Bubble Bubble = newBubble.GetComponent<Bubble>();
             Bubble.SetRandomState();// Set a random state for the new bubble
             newRow.Add(Bubble);
-            bubbleGrid.Add(new List<Bubble>() { Bubble });  
+            //bubbleGrid.Add(new List<Bubble>() { Bubble });  
         }
+        bubbleGrid.Add(newRow);
         bubbleCount += newRow.Count; 
         MoveExistingLayersDown();
     }
@@ -152,8 +146,9 @@ public class gamemanager : MonoBehaviour
             Bubble Bubble = newBubble.GetComponent<Bubble>();
             Bubble.SetRandomState();
             newRow.Add(Bubble);
-            bubbleGrid.Add(new List<Bubble>() { Bubble });  
+            //bubbleGrid.Add(new List<Bubble>() { Bubble });  
         }
+        bubbleGrid.Add(newRow);
         bubbleCount += newRow.Count; 
         MoveExistingLayersDown();
     }
@@ -169,8 +164,9 @@ public class gamemanager : MonoBehaviour
             Bubble Bubble = newBubble.GetComponent<Bubble>();
             Bubble.SetRandomState();
             newRow.Add(Bubble);
-            bubbleGrid.Add(new List<Bubble>() { Bubble });  
+            //bubbleGrid.Add(new List<Bubble>() { Bubble });  
         }
+        bubbleGrid.Add(newRow);
         bubbleCount += newRow.Count; 
         MoveExistingLayersDown();
     }
@@ -196,7 +192,6 @@ public class gamemanager : MonoBehaviour
     {
         if (Bubbles == null)
         {
-            Debug.Log("Bubbles object is null or has been destroyed.");
             return 0f; 
         }
         if ( Bubbles.childCount > 0)
@@ -237,9 +232,9 @@ public class gamemanager : MonoBehaviour
             Bubble Bubble = newBubble.GetComponent<Bubble>();
             Sprite stateSprite = Bubble.GetSpriteForState(rowStates[i]);
             Bubble.SetStateBubble(stateSprite);
-            newRow.Add(Bubble);
-            bubbleGrid.Add(new List<Bubble>() { Bubble });  
+            newRow.Add(Bubble); 
         }
+        bubbleGrid.Add(newRow); 
         bubbleCount += newRow.Count; 
         MoveExistingLayersDown();
     }
@@ -256,23 +251,23 @@ public class gamemanager : MonoBehaviour
         if (lives < 3)
         {
             switch (currentLevel)
-        {
-            case Level.level1:
-                CreateNewLayerOfBubbleslevel1();
-                break;
-            case Level.level2:
-                CreateNewLayerOfBubbleslevel2();
-                break;
-            case Level.level3:
-                CreateNewLayerOfBubbleslevel3();
-                break;
-            case Level.level4:
-                CreateNewLayerOfBubbleslevel4();
-                break;
-            case Level.level5:
-                CreateNewLayerOfBubbleslevel5();
-                break;
-        }
+            {
+                case Level.level1:
+                    CreateNewLayerOfBubbleslevel1();
+                    break;
+                case Level.level2:
+                    CreateNewLayerOfBubbleslevel2();
+                    break;
+                case Level.level3:
+                    CreateNewLayerOfBubbleslevel3();
+                    break;
+                case Level.level4:
+                    CreateNewLayerOfBubbleslevel4();
+                    break;
+                case Level.level5:
+                    CreateNewLayerOfBubbleslevel5();
+                    break;
+            }
         }
     }
     public void SetBallReference(GameObject newBall)
@@ -306,7 +301,6 @@ public class gamemanager : MonoBehaviour
 
     void InitializeGridlevel5()
     {
-        Debug.Log("Inside InitializeGridlevel5");
         bubbleGrid = new List<List<Bubble>>();
         
         // Define the number of bubbles per row
@@ -316,9 +310,9 @@ public class gamemanager : MonoBehaviour
         {
             List<Bubble> row = new List<Bubble>();
             
-            for (int j = 0; j < bubblesPerRow[i]; j++)
+            for (int j = 0; j < bubblesPerRow[i]; j++)//iterates through each column in  a row
             {
-                Bubble bubble = PlaceBubble(i, j, bubblesPerRow[i]);
+                Bubble bubble = PlaceBubble(i, j, bubblesPerRow[i]);//for each bubble calls placebubble
                 row.Add(bubble);
             }
             
@@ -491,7 +485,7 @@ public class gamemanager : MonoBehaviour
         }
 
         // Shuffle the rowStates array 
-        ShuffleArray(rowStates);
+        //ShuffleArray(rowStates);
 
         return rowStates;
     }
@@ -634,7 +628,7 @@ public class gamemanager : MonoBehaviour
         UpdateScoreText();
     }
 
-     private void UpdateScoreText()
+    private void UpdateScoreText()
     {
         ScoreText.text = "Score: " + score;
         CalculateCoins();
@@ -666,7 +660,6 @@ public class gamemanager : MonoBehaviour
         paddles.SetActive(false);
         lifebubble.SetActive(false);
         bomb.SetActive(false);
-        //hammer.SetActive(false);
         rainbowball.SetActive(false);
         EndScreenCanvas.SetActive(true);
         EndScreenScoreText.text = "Total Score: " + score; 
@@ -684,7 +677,6 @@ public class gamemanager : MonoBehaviour
         paddles.SetActive(true);
         lifebubble.SetActive(true);
         bomb.SetActive(true);
-        //hammer.SetActive(true);
         rainbowball.SetActive(true);
         if (currentLevel == Level.level1)
         {
@@ -712,7 +704,6 @@ public class gamemanager : MonoBehaviour
     public void OnBubbleBroken()
     {
         bubbleCount--;
-        Debug.Log(bubbleCount);
         if (bubbleCount == 0)
         {
             if (currentLevel == Level.level1)
